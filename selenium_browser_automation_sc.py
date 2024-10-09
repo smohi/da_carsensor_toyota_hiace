@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 import time
+import datetime
 
 
 #initializing webdriver using chromedriver to download automatically download if not available
@@ -15,6 +16,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 #going to the target website homepage to initiate search
 url = "https://www.carsensor.net/"
 driver.get(url) #opens chrome browser window
+time.sleep(5)
 
 #finding the searchbox
 search_box = driver.find_element(By.NAME, 'KW') #in carsensor's search box, serchbox input field name is 'KW'
@@ -73,5 +75,9 @@ df['Price'] = df['Price'].replace('[\D]', '', regex=True).astype(float)  # remov
 
 print(df)
 
+#saving DataFrame as csv
+current_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+csv_filename = f'toyota_hiace_data_{current_time}.csv'
+df.to_csv(csv_filename, index=False)
 
-
+driver.quit()
