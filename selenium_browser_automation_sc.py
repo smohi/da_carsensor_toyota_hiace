@@ -62,7 +62,16 @@ for car in car_listings:
     
     car_data.append(car_specs)
     
+#converting data into DataFrame (pandas)
 
+df = pd.DataFrame(car_data)
+
+#cleaning and analyzing the price data (if necessary)
+df['Price'] = df['Price'].replace('[\D]', '', regex=True).astype(float)  # removing non-numeric characters from price if needed
+    
+#displaying final dataframe
+
+print(df)
 
 
 
